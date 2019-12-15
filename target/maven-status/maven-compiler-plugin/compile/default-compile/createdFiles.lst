@@ -1,0 +1,5 @@
+servlets\UserServlet.class
+servlets\LoginServlet.class
+model\User.class
+servlets\RegistrationServlet.class
+model\Database.class
