@@ -7,6 +7,7 @@
 <title>Student page</title>
 </head>
 <body>
-	Student page
+	Имя: <I><%= request.getParameter("username") %></I>
+	<a href="logout">Login</a>
 </body>
 </html>

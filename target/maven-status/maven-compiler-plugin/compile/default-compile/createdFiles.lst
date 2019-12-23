@@ -1,5 +1,7 @@
-servlets\UserServlet.class
 servlets\LoginServlet.class
+servlets\LogoutServlet.class
+model\Database.class
+servlets\UserServlet.class
 model\User.class
 servlets\RegistrationServlet.class
-model\Database.class
+servlets\TeacherServlet.class

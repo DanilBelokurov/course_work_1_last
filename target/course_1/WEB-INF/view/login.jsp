@@ -2,32 +2,24 @@
 <html>
 <head>
 <title>Login page</title>
-<%-- <style>
+<style>
    		<%@include file='css/bootstrap.min.css' %>
 	</style>
 	<style>
    		<%@include file='css/main.css' %>
 	</style>
-		<script >
+	<script >
 		<%@include file='js/main.js' %>
-	</script> --%>
+	</script>
 </head>
 
 <body>
 
+
+
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-50 p-b-90">
-
-				<a href="signup"> Registration</a>
-
-				<p>
-					<%
-						if (request.getAttribute("message") != null) {
-							out.println("<p>" + request.getAttribute("message") + "</p>");
-						}
-					%>
-				</p>
 
 				<form method="post" "login100-form validate-form flex-sbflex-w">
 					<input type="hidden" name="redirectId" value="${param.redirectId}" />
@@ -49,10 +41,13 @@
 
 					<div class="container-login100-form-btn m-t-17">
 						<button class="login100-form-btn" type="submit" value="LogIn">
-							Login</button>
+							Login
+						</button>
 					</div>
 
 				</form>
+
+				<a class="ref_to_reg" href="signup"> Registration</a>
 
 			</div>
 		</div>

@@ -1,19 +1,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
-<head>
-<title>Login page</title>
-<style>
-   		<%@include file='css/bootstrap.min.css' %>
-	</style>
-	<style>
-   		<%@include file='css/main.css' %>
-	</style>
-		<script >
-		<%@include file='js/main.js' %>
-	</script>
-</head>
+
+	<head>
+		<title>Login page</title>
+		<style><%@include file='css/main.css' %></style>
+		<script><%@include file='js/jquery-3.2.1.min.js' %></script>
+	</head>
 
 <body>
+
+
 
 	<div class="limiter">
 		<div class="container-login100">

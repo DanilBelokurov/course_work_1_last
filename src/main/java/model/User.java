@@ -7,31 +7,44 @@ public class User {
 	private String name;
 	private String login;
 	private String password;
+	private String subject;
 	private int role;
+	private String id;
 	private ArrayList<Integer> group = new ArrayList<Integer>();
 
-	public User(String name, String login, String password, int role, String groups) {
+	public User(String name, String login, String password, String subject, int role, String groups) {
+		super();
+		this.name = name;
+		this.login = login;
+		this.password = password;
+		this.subject = subject;
+		this.role = role;
+		id = groups;
+		
+		if (role == 0)
+			group.add(Integer.getInteger(groups));
+
+		if(role == 1) {
+			int idx = groups.indexOf("_");
+			subject = groups.substring(0,idx);
+			groups = groups.substring(idx + 1);
+			
+			String[] groupsTmp = groups.split("_");
+			for (int i = 0; i < groupsTmp.length; i++) {
+				group.add(Integer.parseInt(groupsTmp[i]));
+			}
+		}
+	}
+
+	public User(String name, String login, String password, int role, ArrayList<Integer> group) {
 		super();
 		this.name = name;
 		this.login = login;
 		this.password = password;
 		this.role = role;
-
-		int delimCount = groups.length() % 4;
-
-		if (role == 0 & delimCount == 0)
-			group.add(Integer.getInteger(groups));
-
-		int startIdx = 0;
-		int endIdx = 4;
-
-		for (int i = 0; i <= delimCount; i++) {
-			group.add(Integer.parseInt(groups.substring(startIdx, endIdx)));
-			startIdx += 5;
-			endIdx += 5;
-		}
+		this.group = group;
 	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -60,7 +73,18 @@ public class User {
 		return role;
 	}
 
+	public String getId() {
+		/*
+		 * String id = new String(); String[] regId = this.name.split(" "); for (int i =
+		 * 0; i < regId.length; i++) id += regId[i] + "_";
+		 * 
+		 * id += this.group.get(0);
+		 */
+		return id;
+	}
+
 	public void setRole(int role) {
 		this.role = role;
 	}
+	
 }

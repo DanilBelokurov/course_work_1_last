@@ -2,29 +2,29 @@
 package servlets;
 
 import java.io.IOException;
-import java.sql.Connection;
+/*import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.Statement;*/
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.Database;
+import model.User;
 
 public class RegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public RegistrationServlet() {
-		super();
-	}
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/signup.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -32,50 +32,58 @@ public class RegistrationServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		try {
-
+			/* Name + Login + Password getting */
 			String name = request.getParameter("name");
 			String login = request.getParameter("login");
 			String password = request.getParameter("password");
-			String role = request.getParameter("role");
-			String id = request.getParameter("groups");
+			String subject = new String();
+			int role = 0;
+			String id;
+			ArrayList<Integer> group = new ArrayList<Integer>();
 			
-			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/course", "root", "root");
-			Statement statement = connection.createStatement();
-			
-			String findQuery = "SELECT * FROM auth WHERE login = \"" + login + "\" AND password = \"" + password + "\"" ;
-
-			ResultSet resultSet = statement.executeQuery(findQuery);
-			if (!resultSet.next()) {
-				String sizeQuery = "SELECT COUNT( * ) FROM  auth";
-				resultSet = statement.executeQuery(sizeQuery);
-				resultSet.next();
-				int size = resultSet.getInt(1);
-				String insertQuery = "INSERT INTO course.auth (name, login, password, type, id) VALUES ('" + name
-						+ "', '" + login + "', '" + password + "', '" + role + "', '" + id + "')";
-				
-				statement.executeUpdate(insertQuery);
-				response.sendRedirect("course_1/login");
-			} else {
-				//alert
-				request.setAttribute("userName", "Sorry, user with the same name already exists.");
+			/* Role getting: 0 -- student */
+			String roleTmp = request.getParameter("role");
+			if(roleTmp.equals("Teacher")) {
+				role = 1;
 			}
-			statement.close();
-			connection.close();
-
-			//doGet(request, response);
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		//doGet(request, response);
+			
+			/* Subject, if teacher */
+			if(role == 1) {
+				subject = request.getParameter("subject");
+			}
+			
+			/* id = [subject]_group/groups */
+			String[] groups = request.getParameterValues("groups[]");
+			StringBuilder idTmp = new StringBuilder();
+			
+			if(role == 1)
+				idTmp.append(subject).append("_");
+			
+			for(String data: groups){
+				idTmp.append(data);
+				group.add(Integer.parseInt(data));
+				if(role == 1)
+					idTmp.append("_");
+			}
+			
+			if(role == 1)
+				id = idTmp.substring(0, idTmp.length() - 1);
+			else
+				id = idTmp.toString();
+			
+			User user = new User(name, login, password, subject, role, id);
+			
+			boolean flag = Database.export(user);
+			
+			if(flag) {
+				HttpSession session = request.getSession();
+				session.setAttribute("user", user);
+				
+				if(user.getRole() == 0)
+					response.sendRedirect("lk");
+				else
+					response.sendRedirect("teacher_cabinet");
+			} else
+				response.sendRedirect("signup");
 	}
 }
