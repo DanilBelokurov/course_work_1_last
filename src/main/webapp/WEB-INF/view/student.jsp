@@ -27,15 +27,17 @@
 	<!-- Отрисовка таблицы ведомости  -->
 	<div id="marks_table">
 		<table border ="1" width="500" align="center"> 
-         <tr bgcolor="00FF7F"> 
+         <tr > 
           <th><b>Subject</b></th> 
-          <th><b>Mark</b></th> 
+          <th colspan="10"><b>Mark</b></th> 
          </tr> 
         <%ArrayList<Student> std = (ArrayList<Student>)request.getAttribute("students"); 
         for(int i=0; i<std.size();i++){%>
             <tr> 
                 <td><%=std.get(i).getSubject()%></td> 
-                <td><%=std.get(i).getMark()%></td> 
+                <%for(int j=0; j<std.get(i).getMark().size();j++) {%>
+                	<td><%=std.get(i).getMark().get(j).toString()%></td> 
+                <%} %>
             </tr> 
             <%}%> 
         </table>  

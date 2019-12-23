@@ -12,6 +12,7 @@ public class StudentDB {
 	
 	public static ArrayList<Student> select(String tableName) {
 		ArrayList<Student> students = new ArrayList<Student>();
+		ArrayList<String> marks = new ArrayList<String>();
 		try {
 			Class.forName("com.mysql.jdbc.Driver").getDeclaredConstructor().newInstance();
 			try (Connection conn = DriverManager.getConnection(url, username, password)) {
@@ -21,8 +22,12 @@ public class StudentDB {
 					ResultSet resultSet = statement.executeQuery("SELECT * FROM " + tableName);
 					while (resultSet.next()) {
 						String subject = resultSet.getString(1);
-						int mark = resultSet.getInt(2);
-						Student st = new Student(subject, mark);
+						Student st = new Student(subject);
+						for(int i = 2; i < 12; i++) {
+							st.setMark(resultSet.getString(i));
+							System.out.println(resultSet.getString(i));
+						}
+						
 						students.add(st);
 					}
 				}
@@ -33,7 +38,7 @@ public class StudentDB {
 		return students;
 	}
 
-	public static int insert(Student student) {
+	/*public static int insert(Student student) {
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver").getDeclaredConstructor().newInstance();
@@ -42,7 +47,7 @@ public class StudentDB {
 				String sql = "INSERT INTO student (subject, mark) Values (?, ?)";
 				try (PreparedStatement preparedStatement = conn.prepareStatement(sql)) {
 					preparedStatement.setString(1, student.getSubject());
-					preparedStatement.setInt(2, student.getMark());
+					preparedStatement.setString(2, student.getMark());
 
 					return preparedStatement.executeUpdate();
 				}
@@ -70,5 +75,5 @@ public class StudentDB {
 			System.out.println(ex);
 		}
 		return 0;
-	}
+	}*/
 }

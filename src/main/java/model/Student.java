@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Student implements Serializable {
  
@@ -8,15 +9,14 @@ public class Student implements Serializable {
  
     private String id;
     private String subject;
-    private int mark;
+    private ArrayList<Integer> mark = new ArrayList<Integer>();
      
     public Student(){ }
     
-    public Student(String subject, int mark){
+    public Student(String subject){
         this.subject = subject;
-        this. mark =  mark;
     }
-     
+ 
     public String getId() {
         return id;
     }
@@ -29,11 +29,15 @@ public class Student implements Serializable {
         this.subject = subject;
     }
  
-    public int getMark() {
+    public ArrayList<Integer> getMark() {
         return  mark;
     }
  
-    public void setMark(int  mark) {
-        this. mark =  mark;
+    public void setMark(String  mark) {
+    	//System.out.println(mark);
+        if(mark!=null) {
+        	String[] tmp= mark.split(" ");
+        	this.mark.add( Integer.parseInt(tmp[0]));
+        }
     }
 }

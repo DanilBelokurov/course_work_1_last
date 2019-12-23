@@ -63,6 +63,6 @@
   </servlet-mapping>
   <servlet-mapping>
   	<servlet-name>TeacherInit</servlet-name>
-  	<url-pattern>/TeacherInit</url-pattern>
+  	<url-pattern>/teacher_init</url-pattern>
   </servlet-mapping>
 </web-app>
