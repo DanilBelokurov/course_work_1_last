@@ -1,23 +1,52 @@
-function checkPas() {
-  var pas1 = document.getElementById("password");
-  var pas2 = document.getElementById("password2");
-  if(pas1.value != '' && pas2.value != '') {
-    
-    if(pas1.value != pas2.value){
-      pas1.style.borderColor = "red";
-      pas2.style.borderColor = "red";
-      document.getElementById("password2").setCustomValidity("Пароли не совпадают!");
-      return false;
-    }
-    else {
-      pas1.style.borderColor = "#28921f";
-      pas2.style.borderColor = "#28921f";
- 
-      return true;
-    }
-  }
-}
+function checkForm() {
+	
+	var form = document.getElementById('form');
+	
+	console.log(form);
 
-function loadDoc() {
-	 return checkPas();
+	if (form.name.value == "") {
+		alert("Error: Name cannot be blank!");
+		form.name.focus();
+		return false;
+	}
+
+	if (form.login.value == "") {
+		alert("Error: Login cannot be blank!");
+		form.login.focus();
+		return false;
+	}
+
+	re = /^\w+$/;
+	if (!re.test(form.login.value)) {
+		alert("Error: Login must contain only letters, numbers and underscores!");
+		form.login.focus();
+		return false;
+	}
+
+	if (form.password.value == "") {
+		alert("Error: Password cannot be blank!");
+		form.password.focus();
+		return false;
+	}
+
+	if (form.password.value != form.password2.value) {
+		alert("Error: Please check that you've entered and confirmed your password!");
+		form.password.focus();
+		return false;
+	}
+
+	if (form.role.value == "Student") {
+
+		var checked = [];
+		$('input:checkbox:checked').each(function() {
+			checked.push($(this).val());
+		});
+
+		if (checked.length > 1) {
+			alert("Only one group for student");
+			return false;
+		}
+	}
+
+	return true;
 }

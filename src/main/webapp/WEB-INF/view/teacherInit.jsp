@@ -17,7 +17,7 @@
     
         <div class="btn_container"><input type="button" id="button" value="Add some work"></div>
 
-        <form name="form" method="get">
+        <form name="form" action="teacher_cabinet" method="post">
 
             <div id="works_container"> </div>
 

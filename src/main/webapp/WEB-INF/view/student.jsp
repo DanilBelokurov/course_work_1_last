@@ -11,17 +11,19 @@
 <head>
 	<meta charset="RU">
 	<title>Student page</title>
-	 <style><%@include file='css/userpage.css'%></style>
+		<script><%@include file='js/anychart-base.min.js' %></script>
+		<style><%@include file='css/teacherpage.css' %></style>
+		<script><%@include file='js/diagram.js' %></script>
 </head>
 
 <body>
 
 	<!-- Вывод имени ученика -->
 	<div class="student_name">
-		<I> <% 
+		<h2> <% 
 			String name = ((User)request.getAttribute("user")).getName(); 
 			out.println(name);
-		%></I>
+		%></h2>
 	</div>
 
 	<!-- Отрисовка таблицы ведомости  -->
@@ -29,7 +31,7 @@
 		<table border ="1" width="500" align="center"> 
          <tr > 
           <th><b>Subject</b></th> 
-          <th colspan="10"><b>Mark</b></th> 
+          <th colspan="10"><b>Marks</b></th> 
          </tr> 
         <%ArrayList<Student> std = (ArrayList<Student>)request.getAttribute("students"); 
         for(int i=0; i<std.size();i++){%>
@@ -40,9 +42,14 @@
                 <%} %>
             </tr> 
             <%}%> 
-        </table>  
+        </table>
+        
+        <div class="diag_button"> <button class="btn" id="btn" onClick="diagForStudent();"> Create diagram </button></div>
 	</div>
 	
-	<a href="logout">Logout</a>
+	
+	<div id="container" style="width: 500px; height: 400px;">
+	
+<!-- 	<a href="logout">Logout</a> -->
 </body>
 </html>

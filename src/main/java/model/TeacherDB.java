@@ -10,29 +10,64 @@ public class TeacherDB {
     private static String subjectName;
     private static int group;
     private static ArrayList<Integer> groups;
+    private static ArrayList<String> dates = new ArrayList<>();
     
-    public TeacherDB(String id, int idx) {
-    	 groups = new ArrayList<>();
+    public TeacherDB() {
+    	
+    }
+    
+    public TeacherDB(String id, int idx, ArrayList<String> dates) {
+    	
+    	groups = new ArrayList<>();
+    	
     	System.out.print(id);
-    	String [] tmp= id.split("_");
-    	TeacherDB.subjectName=tmp[0];
-    	for(int i=0;i<tmp.length;i++) {
-    	if(i!=0)
-    		groups.add(Integer.parseInt(tmp[i]));
+    	System.out.println();
+    	
+    	String [] tmp = id.split("_");
+    	TeacherDB.subjectName = tmp[0];
+    	
+    	for(int i = 0 ; i < tmp.length; i++) {
+    		if(i != 0)
+    			groups.add(Integer.parseInt(tmp[i]));
     	}
-    	if(idx==0)
-    		TeacherDB.group=groups.get(idx);
+    	
+    	if(idx == 0)
+    		TeacherDB.group = groups.get(idx);
     	else
-    		TeacherDB.group=idx;
+    		TeacherDB.group = idx;
+
+    	if(TeacherDB.dates.size() == 0){
+    		
+    		for(int i=0; i < dates.size(); i++) {
+
+    			TeacherDB.dates.add(dates.get(i));
+    			System.out.println(dates.get(i));
+    			
+    		}
+    			
+    	}
     }
     
     public int getGroup(int idx) {
     	return groups.get(idx);
     }
     
+    public int getCurrGroup() {
+    	return group;
+    }
+    
     public int getNumberGroup() {
     	return groups.size();
     }
+    
+    public String getDate(int ind) {
+    	return dates.get(ind);
+    }
+    
+    public int getNumberOfDates() {
+    	return dates.size();
+    }
+    
     public ArrayList<Teacher> select() {
         ArrayList<Teacher> teachers = new ArrayList<Teacher>();
         try{
@@ -48,7 +83,7 @@ public class TeacherDB {
                 		}
                 }
                 for(int i=0; i<stTables.size();i++) {
-                	ResultSet resultSet = statement.executeQuery("SELECT * FROM "+ stTables.get(i)+ " WHERE subject='"+subjectName+"';");
+                	ResultSet resultSet = statement.executeQuery("SELECT * FROM "+ stTables.get(i)+ " WHERE subject='" + subjectName + "';");
                 	String [] tmp= stTables.get(i).split("_");
                 	char[] tmpChar;
                 	StringBuilder stName = new StringBuilder();
@@ -62,7 +97,7 @@ public class TeacherDB {
                 	int k=2;
                 	while(resultSet.next()){
                 		while(k<12) {
-                			int mark = resultSet.getInt(k);
+                			String mark = resultSet.getString(k);
                 			t.setMark(mark);
                 			k++;
                 		}
@@ -77,18 +112,20 @@ public class TeacherDB {
         return teachers;
     }
      
-    public static int update(String stName, int group, int mark) {
+    public int update(String up, String mark) {
         try{
             Class.forName("com.mysql.jdbc.Driver").getDeclaredConstructor().newInstance();
             try (Connection conn = DriverManager.getConnection(url, username, password)){
-            	String [] tmp= stName.split(" ");
-    			String stId=tmp[0]+"_"+tmp[1]+"_"+Integer.toString(group);
-                String sql = "UPDATE "+ stId +"SET mark = ? WHERE subject = ?";
-                try(PreparedStatement preparedStatement = conn.prepareStatement(sql)){
-                    preparedStatement.setInt(1, mark);
-                    preparedStatement.setString(2, subjectName);
-                    return  preparedStatement.executeUpdate();
-                }
+            	String[] tmp = up.split("_");
+    			String stId = tmp[0] + "_" + tmp[1] + "_" + tmp[2];
+    			String field= "mark" + tmp[4];
+    			String newMark = mark + " " + tmp[3];
+    			String sql = "UPDATE " + stId + " SET " + field + "= ? WHERE subject = ?";
+    			try(PreparedStatement preparedStatement = conn.prepareStatement(sql)){
+    				preparedStatement.setString(1, newMark);
+    				preparedStatement.setString(2, subjectName);
+    				return  preparedStatement.executeUpdate();
+    			}
             }
         }
         catch(Exception ex){
@@ -96,5 +133,4 @@ public class TeacherDB {
         }
         return 0;
     }
-
 }

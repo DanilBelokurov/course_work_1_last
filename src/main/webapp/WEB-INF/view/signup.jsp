@@ -1,70 +1,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <html>
 <head>
-<title>Signup page</title>
 
-<%-- <script><%@include file='js/main.js' %></script> --%>
-
-<script><%@include file='js/jquery-3.2.1.min.js' %></script>
-
-
-<script type="text/javascript">
-
-	function checkForm()
-	{
-			
-	  if(form.name.value == "") {
-	      alert("Error: Name cannot be blank!");
-	      form.name.focus();
-	      return false;
-	    }
+	<title>Signup page</title>
 	
-	  if(form.login.value == "") {
-	    alert("Error: Login cannot be blank!");
-	    form.login.focus();
-	    return false;
-	  }
+	<script><%@include file='js/jquery-3.2.1.min.js' %></script>
 	
-	  re = /^\w+$/;
-	  if(!re.test(form.login.value)) {
-	    alert("Error: Login must contain only letters, numbers and underscores!");
-	    form.login.focus();
-	    return false;
-	  }
-	  
-	  if(form.password.value == "") {
-	      alert("Error: Password cannot be blank!");
-	      form.password.focus();
-	      return false;
-	    }
+	<script><%@include file='js/checker.js' %></script>
 	
-	  if(form.password.value != form.password2.value) {
-	    alert("Error: Please check that you've entered and confirmed your password!");
-	    form.password.focus();
-	    return false;
-	  }
-	  
-	  if(form.role.value == "Student"){
-		  var checked = [];
-		  $('input:checkbox:checked').each(function() {
-		  	checked.push($(this).val());
-		  });
-		  
-		  if(checked.length > 1){
-			  alert("Only one group for student");
-			  return false;
-		  }
-	  }
-	  
-		return true;
-	}
-
-</script>
-
-<style><%@include file='css/bootstrap.min.css'%></style>
-
-<style><%@include file='css/main.css'%></style>
-
+	<%-- <style><%@include file='css/bootstrap.min.css'%></style> --%>
+	
+	<style><%@include file='css/main.css'%></style>
 
 </head>
 
@@ -74,7 +20,7 @@
 		<div class="container-login100">
 			<div class="wrap-login100 p-t-50 p-b-90">
 
-				<form name="form" method="post" class="login100-form validate-formflex-sbflex-w">
+				<form name="form" id="form" method="post" class="login100-form validate-formflex-sbflex-w">
 					<input type="hidden" name="redirectId" value="${param.redirectId}" />
 					<span class="login100-form-title p-b-51"> Signup </span>
 
@@ -107,20 +53,47 @@
 					<div class="wrap-input100 validate-input m-b-16" data-validate="Role is required">
 						 <select id="prof" class="input100" name="role" >
 						    <option value="Student" selected>Student</option>
-						    <option value="Teacher">Teacher</option>
+						    <option class="teacher-option" value="Teacher">Teacher</option>
 						  </select>
 					</div>
+					
+					<div class="hover_bkgr_fricc">
+					    <span class="helper"></span>
+					    <div class="popup">
+					        <div class="popupCloseButton">x</div>
+					        <div class="btn_container"><input type="button" id="button" class="button-popup" value="Add some work"></div>
+					        <div id="works_container"> </div>
+					    </div>
+					</div>
+					
+					<script>
+		            var count = 1;
+		            button.addEventListener("click", function(){
+		                var input = document.createElement('INPUT');
+		                input.id = 'input-popup';
+		                input.type = 'date';
+		                input.setAttribute("data-id", "id" + count);
+		                input.name = "dates[]";
+		                document.querySelector('#works_container').appendChild(input);
+		                count++;
+		            });
+		            </script>
 					
 					<script type="text/javascript">
 						$(document).ready(function() {
 							  $('#prof').change(function() {
-							    if ($("#prof :selected").val()!="Student") {
+							  $('.hover_bkgr_fricc').hide();
+							    if ($("#prof :selected").val() != "Student") {
 							      $("#subject").css("display", "inline-block");
+							      $('.hover_bkgr_fricc').show();
 							    } else {
+							      $('.hover_bkgr_fricc').hide();
 							      $("#subject").css("display", "none");
 							    }
 							  });
-	
+							  $('.popupCloseButton').click(function(){
+							        $('.hover_bkgr_fricc').hide();
+							    });
 							});
 					</script>
 					

@@ -21,7 +21,6 @@ public class UserServlet extends HttpServlet {
 			throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		
 		User user = (User)session.getAttribute("user");
 
 		if (user.getRole() == 1) {
@@ -41,6 +40,5 @@ public class UserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// doGet(request, response);
 	}
 }

@@ -1,103 +1,99 @@
-/*//////////////////////////////////////////////////////////////////
-[ FONT ]*/
-
-/* @font-face {
-  font-family: Ubuntu-Regular;
-  src: url('../fonts/ubuntu/Ubuntu-Regular.ttf'); 
-}
-
-@font-face {
-  font-family: Ubuntu-Bold;
-  src: url('../fonts/ubuntu/Ubuntu-Bold.ttf');  */
-}
-/*/////////////////////////////////////////////////////////////////*/
-
-.mark_list{
+.mark_list {
 	margin: 15px auto;
-	align-content:center;
+	align-content: center;
 	display: flex;
 	justify-content: center;
 	width: 200px;
 }
 
-.group_peaker{
+.group_peaker {
 	display: flex;
 	justify-content: center;
 	margin-bottom: 20px;
 }
 
-table{
+table {
 	border-collapse: collapse;
 	border: 1px solid black;
 }
 
 thead th, tfoot th {
-  font-family: Ubuntu-Regular;
+	font-family: Ubuntu-Regular;
 }
 
 th {
-  letter-spacing: 2px;
-  padding: 10px 10px;
-  background-color: #9999FF;
+	letter-spacing: 2px;
+	padding: 10px 10px;
+	background-color: #9999FF;
 }
 
 td {
-  letter-spacing: 1px;
-  
+	letter-spacing: 1px;
 }
-input{
+
+input {
 	width: 20px;
 	border: none;
 	text-align: center;
 }
 
 tbody td {
-  text-align: center;
-  height: 40px;
+	text-align: center;
+	height: 40px;
 }
 
 tfoot th {
-  text-align: right;
+	text-align: right;
 }
+
 .btn {
-  font-family: Ubuntu-Bold;
-  font-size: 16px;
-  text-transform: uppercase;
-
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 0 15px;
-  width: 100%;
-  height: 30px;
-  background-color: #9999FF;
-  border-radius: 3px;
-
-  -webkit-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  transition: all 0.4s;
+	font-family: Ubuntu-Bold;
+	font-size: 16px;
+	text-transform: uppercase;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 0 15px;
+	width: 100%;
+	height: 30px;
+	background-color: #9999FF;
+	border-radius: 3px;
+	-webkit-transition: all 0.4s;
+	-o-transition: all 0.4s;
+	-moz-transition: all 0.4s;
+	transition: all 0.4s;
 }
 
 .btn:hover {
-  background-color: #403866;
+	background-color: #403866;
 }
 
-.diag_button{
+.diag_button {
 	margin: 15px auto;
-	align-content:center;
+	align-content: center;
 	display: flex;
 	justify-content: center;
 	width: 200px;
 }
 
-#container{
-	margin:15px auto;
-		align-content:center;
+#container {
+	margin: 15px auto;
+	align-content: center;
 	display: flex;
 	justify-content: center;
+}
+
+.student_name {
+	font-size: 25px;
+	color: #403866;
+	line-height: 1.2;
+	margin: 25px 0px 10px 0px;
+	text-transform: uppercase;
+	text-align: center;
+	width: 100%;
+	display: block;
 }
